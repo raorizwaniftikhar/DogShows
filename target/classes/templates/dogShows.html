@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dog Shows Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/}">Home</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active " sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                <li class="active " sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="col-md-12" sec:authorize="isAuthenticated()">
+        <a class="btn btn-default" href="/createDog">New Dog Registration </a> <br/>
+        <br/>
+    </div>
+    <div class="col-md-12 table-responsive" >
+        <table class="table">
+            <thead>
+            <th>Total</th>
+            <th>Breed Name</th>
+            <th>Class Male</th>
+            <th>Class Female</th>
+            <th>Specialty Male</th>
+            <th>Specialty Female</th>
+            </thead>
+            <tbody>
+            <tr th:each="countResult : ${countResults}">
+                <td th:text="${countResult.total}"></td>
+                <td th:text="${countResult.name}"></td>
+                <td th:text="${countResult.classMaleCount}"></td>
+                <td th:text="${countResult.classFemaleCount}"></td>
+                <td th:text="${countResult.specialtyMaleCount}"></td>
+                <td th:text="${countResult.specialtyFemaleCount}"></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+</body>
+
+</html>

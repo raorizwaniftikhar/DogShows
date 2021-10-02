@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Home Page</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" type="text/css"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css" />
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" th:href="@{/dog-shows/result}">Dog Shows</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a th:href="@{/logout}">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="col-md-12" sec:authorize="isAuthenticated()">
+			<a class="btn btn-default" href="/createDog">New Dog Registration </a> <br />
+			<br />
+		</div>
+		<div class="col-md-12 table-responsive" sec:authorize="isAuthenticated()">
+			<table class="table">
+				<thead>
+					<th>Name</th>
+					<th>Owner Name</th>
+					<th>Breed</th>
+					<th>Gender</th>
+					<th>Specialty</th>
+					<th sec:authorize="hasRole('USER')">Edit</th>
+					<th>Delete</th>
+				</thead>
+				<tbody>
+					<tr th:each="dog : ${dogs}">
+						<td>
+							<span th:text="${dog.name}"></span>
+						</td>
+						<td>
+							<span th:text="${dog.userId.firstName} +' '+ ${dog.userId.lastName}"></span>
+						</td>
+						<td>
+							<span th:text="${dog.breedId.name}"></span>
+						</td>
+						<td>
+							<span th:text="${dog.gender}"></span>
+						</td>
+						<td>
+							<span th:text="${dog.specialty}"></span>
+						</td>
+						<td sec:authorize="hasRole('USER')">
+							<a th:href="@{/updateDog?id=}+${dog.id}">Edit</a>
+						</td>
+						<td>
+							<a th:href="@{/deleteDog?id=}+${dog.id}">Delete</a>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+
+</body>
+
+</html>

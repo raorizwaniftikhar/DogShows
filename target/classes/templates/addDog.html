@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org./1999/xhtml" xmlns:sec="http://www.w3.org./1999/xhtml">
+
+<head>
+    <title>Add Dog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Home</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="starter-template">
+        <div class="col-sm-12">
+            <form th:action="@{/addDog}" method="POST">
+                <div class="form-group">
+                    <label class="control-label" for="name">Name </label>
+                    <input id="name" class="form-control" name="name" maxlength="100" minlength="5"
+                           required autofocus="autofocus"/>
+                </div>
+                <div class="form-group" sec:authorize="hasRole('ADMIN')">
+                    <label for="userId">Select Owner:</label>
+                    <select class="form-control" id="userId" name="userId.id">
+                        <option value="0">Select Owner Name</option>
+                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName} + ' '+ ${user.lastName}"></option>
+                    </select>
+                </div>
+                <div class="form-group" sec:authorize="hasRole('USER')">
+                    <label for="userId2">Owner name:</label>
+                    <select class="form-control" id="userId2"  name="userId.id"  disabled>
+                        <option th:value="${user.id}" th:text="${user.firstName} + ' '+ ${user.lastName}" selected></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="breedId">Select Breed:</label>
+                    <select class="form-control" id="breedId" name="breedId.id">
+                        <option value="0">Select Breed</option>
+                        <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Gender</label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="gender" name="gender" class="custom-control-input" value="male">
+                        <label class="custom-control-label" for="gender">Male</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="gender2" name="gender" class="custom-control-input" value="female">
+                        <label class="custom-control-label" for="gender2">Female</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Select Class/Specialty for Champion </label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="specialty" name="specialty" class="custom-control-input" value="Class">
+                        <label class="custom-control-label" for="specialty">Class</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="specialty2" name="specialty" class="custom-control-input" value="Specialty">
+                        <label class="custom-control-label" for="specialty2">Specialty</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+            </form>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
